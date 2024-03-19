@@ -15,14 +15,9 @@ class StringCheckerService implements CheckerInterface
      */
     public function isPalindrome(string $word): bool
     {
-        if ($word === 'Able was I saw Elba') {
-            dd(strtolower(strrev($word)), strtolower($word));
-        }
-        
         if (strtolower(strrev($word)) === strtolower($word)) {
             return true;
         }
-
 
         return false;
     }
@@ -55,11 +50,11 @@ class StringCheckerService implements CheckerInterface
      */
     public function isPangram(string $phrase): bool
     {
-        $letters = range('a', 'z');
+        $alphabetArray = range('a', 'z');
 
         $phrase = strtolower($phrase);
 
-        foreach ($letters as $letter) {
+        foreach ($alphabetArray as $letter) {
             if (strpos($phrase, $letter) === false) {
                 return false;
             }
@@ -75,7 +70,7 @@ class StringCheckerService implements CheckerInterface
      *
      * @return void
      */
-    public function getLetterArray(string $string): array
+    protected function getLetterArray(string $string): array
     {
         return str_split(strtolower(str_replace(' ', '', $string)));
     }

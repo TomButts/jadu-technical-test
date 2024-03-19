@@ -17,7 +17,7 @@ class StringCheckerServiceTest extends TestCase
     /**
      * @dataProvider palindromeProvider
      */
-    public function testIsPalindrome($word, $expected)
+    public function testItChecksPalindromeCorrectly(string $word, bool $expected): void
     {
         $this->assertEquals($expected, $this->stringCheckerService->isPalindrome($word));
     }
@@ -25,7 +25,7 @@ class StringCheckerServiceTest extends TestCase
     /**
      * @dataProvider anagramProvider
      */
-    public function testIsAnagram($word, $comparison, $expected)
+    public function testItChecksAnagramCorrectly(string $word, string $comparison, bool $expected): void
     {
         $this->assertEquals($expected, $this->stringCheckerService->isAnagram($word, $comparison));
     }
@@ -33,7 +33,7 @@ class StringCheckerServiceTest extends TestCase
     /**
      * @dataProvider pangramProvider
      */
-    public function testIsPangram($phrase, $expected)
+    public function testItChecksPangramCorrectly(string $phrase, bool $expected): void
     {
         $this->assertEquals($expected, $this->stringCheckerService->isPangram($phrase));
     }
@@ -42,30 +42,30 @@ class StringCheckerServiceTest extends TestCase
      * A palindrome is a word, phrase, number, or other sequence of characters
      * which reads the same backward or forward.
      *
-     * @return void
+     * @return array
      */
-    public function palindromeProvider()
+    public function palindromeProvider(): array
     {
         return [
-            ["anna", true],
-            ["Bark", false],
-            ["level", true],
-            ["deified", true],
-            ["radar", true],
-            ["racecar", true],
-            ["raCecar", true],
-            ["race\x00car", false],
-            ["hello", false],
-            ["World", false],
-            ["\x00madam\x00", true], // any other sequence of characters
-            ["civ vic", true],
-            ["noon", true],
-            ["stats", true],
-            ["able was I ere I saw elba", true], // phrase
-            ["A man, a plan, a canal, Panama!", false], // the commas aren't symmetrical
-            ["Never odd or even", false], // spaces are not symetrical
-            ["Able was I saw Elba", true], // case insensitive
-            ["12321", true], // any other sequence of characters
+            'Palindrome: anna' => ['anna', true],
+            'Palindrome: level' => ['level', true],
+            'Palindrome: deified' => ['deified', true],
+            'Palindrome: radar' => ['radar', true],
+            'Palindrome: racecar' => ['racecar', true],
+            'Palindrome: noon' => ['noon', true],
+            'Palindrome: stats' => ['stats', true],
+            'Not a palindrome: Bark' => ['Bark', false],
+            'Not a palindrome: hello' => ['hello', false],
+            'Not a palindrome: World' => ['World', false],
+            'Case insensitive: raCecar' => ['raCecar', true],
+            'Special chars: race\x00car' => ['race\x00car', false],
+            'Special chars: \x00madam\x00' => ["\x00madam\x00", true],
+            'Special chars: 12321' => ['12321', true],
+            'Phrase: civ vic' => ['civ vic', true],
+            'Phrase: able was I ere I saw elba' => ['able was I ere I saw elba', true],
+            'Phrase: A man, a plan, a canal, Panama!' => ['A man, a plan, a canal, Panama!', false],
+            'Phrase: Never odd or even' => ['Never odd or even', false],
+            'Phrase: Able was I saw Elba' => ['Able was I saw Elba', true],
         ];
     }
 
@@ -74,29 +74,29 @@ class StringCheckerServiceTest extends TestCase
      * to produce a new word or phrase, using all the original letters
      * exactly once.
      *
-     * @return void
+     * @return array
      */
-    public function anagramProvider()
+    public function anagramProvider(): array
     {
         return [
-            ["coalface", "cacao elf", true],
-            ["coalface", "dark elf", false],
-            ["listen", "silent", true],
-            ["hello", "world", false],
-            ["evil", "vile", true],
-            ["listen", "silent", true],
-            ["astronomer", "moon starer", true],
-            ["clint eastwood", "old west action", true],
-            ["debit card", "bad credit", true],
-            ["dormitory", "dirty room", true],
-            ["school master", "the classroom", true],
-            ["listen", "slient", true],
-            ["hello", "holle", true],
-            ["restful", "fluster", true],
-            ["rail safety", "fairy tales", true],
-            ["conversation", "voices rant on", true],
-            ["client eastwood", "old west action", false],
-            ["ab", "ba", true],
+            ['coalface', 'cacao elf', true],
+            ['coalface', 'dark elf', false],
+            ['listen', 'silent', true],
+            ['hello', 'world', false],
+            ['evil', 'vile', true],
+            ['listen', 'silent', true],
+            ['astronomer', 'moon starer', true],
+            ['clint eastwood', 'old west action', true],
+            ['debit card', 'bad credit', true],
+            ['dormitory', 'dirty room', true],
+            ['school master', 'the classroom', true],
+            ['listen', 'slient', true],
+            ['hello', 'holle', true],
+            ['restful', 'fluster', true],
+            ['rail safety', 'fairy tales', true],
+            ['conversation', 'voices rant on', true],
+            ['client eastwood', 'old west action', false],
+            ['ab', 'ba', true],
         ];
     }
 
@@ -104,27 +104,27 @@ class StringCheckerServiceTest extends TestCase
      * A Pangram for a given alphabet is a sentence using every letter of the
      * alphabet at least once.
      *
-     * @return void
+     * @return array
      */
-    public function pangramProvider()
+    public function pangramProvider(): array
     {
         return [
-            ["The quick brown fox jumps over the lazy dog", true],
-            ["Pack my box with five dozen liquor jugs", true],
-            ["The five boxing wizards jump quickly", true],
-            ["Sphinx of black quartz, judge my vow", true],
-            ["The quick brown fox jumps over the lazy cat", false],
-            ["The British Broadcasting Corporation (BBC) is a British public service broadcaster.", false],
-            ["Amazingly few discotheques provide jukeboxes", true],
-            ["Waltz, nymph, for quick jigs vex Bud", true],
-            ["Jackdaws love my big sphinx of quartz", true],
-            ["How razorback-jumping frogs can level six piqued gymnasts!", true],
-            ["He watched silently as the crows circled above", false],
-            ["Quick zephyrs blow, vexing daft Jim", true],
-            ["The quick brown fox jumps over the lazy badger", true],
-            ["The jay, pig, fox, zebra, and my wolves quack!", true],
-            ["Mr. Jock, TV quiz PhD, bags few lynx", true],
-            ["The five boxing wizards jump quickly!", true],
+            ['The quick brown fox jumps over the lazy dog', true],
+            ['Pack my box with five dozen liquor jugs', true],
+            ['The five boxing wizards jump quickly', true],
+            ['Sphinx of black quartz, judge my vow', true],
+            ['The quick brown fox jumps over the lazy cat', false],
+            ['The British Broadcasting Corporation (BBC) is a British public service broadcaster.', false],
+            ['Amazingly few discotheques provide jukeboxes', true],
+            ['Waltz, nymph, for quick jigs vex Bud', true],
+            ['Jackdaws love my big sphinx of quartz', true],
+            ['How razorback-jumping frogs can level six piqued gymnasts!', true],
+            ['He watched silently as the crows circled above', false],
+            ['Quick zephyrs blow, vexing daft Jim', true],
+            ['The quick brown fox jumps over the lazy badger', true],
+            ['The jay, pig, fox, zebra, and my wolves quack!', true],
+            ['Mr. Jock, TV quiz PhD, bags few lynx', true],
+            ['The five boxing wizards jump quickly!', true],
         ];
     }
 

@@ -91,7 +91,7 @@ class StringCheckerServiceStressTest extends TestCase
      *
      * @param string $absolutePath
      *
-     * @return \Generator
+     * @return Generator
      */
     private function readDictionaryCsv(string $absolutePath): Generator
     {

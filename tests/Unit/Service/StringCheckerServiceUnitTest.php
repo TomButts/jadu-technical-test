@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Service;
+namespace App\Tests\Unit\Service;
 
 use App\Service\StringCheckerService;
 use PHPUnit\Framework\TestCase;
 
-class StringCheckerServiceTest extends TestCase
+class StringCheckerServiceUnitTest extends TestCase
 {
     private StringCheckerService $stringCheckerService;
 

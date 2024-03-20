@@ -32,8 +32,8 @@ class StringCheckerService implements CheckerInterface
      */
     public function isAnagram(string $word, string $comparison): bool
     {
-        $sortedWord = $this->getLetterArray($word);
-        $sortedComparison = $this->getLetterArray($comparison);
+        $sortedWord = $this->filterSpacesAndSplitString($word);
+        $sortedComparison = $this->filterSpacesAndSplitString($comparison);
 
         sort($sortedWord);
         sort($sortedComparison);
@@ -50,11 +50,9 @@ class StringCheckerService implements CheckerInterface
      */
     public function isPangram(string $phrase): bool
     {
-        $alphabetArray = range('a', 'z');
-
         $phrase = strtolower($phrase);
 
-        foreach ($alphabetArray as $letter) {
+        foreach ($this->getOrderedAlphabetArray() as $letter) {
             if (strpos($phrase, $letter) === false) {
                 return false;
             }
@@ -70,8 +68,20 @@ class StringCheckerService implements CheckerInterface
      *
      * @return void
      */
-    protected function getLetterArray(string $string): array
+    protected function filterSpacesAndSplitString(string $string): array
     {
         return str_split(strtolower(str_replace(' ', '', $string)));
+    }
+
+    /**
+     * Alphabet array ordered by least common letters first.
+     *
+     * @return array
+     */
+    protected function getOrderedAlphabetArray(): array
+    {
+        return [
+            'z', 'q', 'x', 'j', 'k', 'v', 'b', 'p', 'y', 'g', 'f', 'w', 'm', 'u', 'c', 'l', 'd', 'r', 'h', 's', 'n', 'i', 'o', 'a', 't', 'e'
+        ];
     }
 }

@@ -15,8 +15,37 @@ Total: 2h10m
 
 Taking a break at this point. Possibly a minimum viable product has been achieved depending on answers to email. No requirements were given in terms of optimisation, but next session will be looking at ways to improve the speed and make sure code quality is high.
 
-### Todo next session
+Todo next session
+-----------------
 * Writing stress tests to obtain timings
 * Further optimisation of algorithms
 * Thinking about possibility of caching common checks using redis
 * Thinking about next steps
+
+### 20/03/2024
+
+1. Writing stress tests and obtaining initial benchmarks #40m
+
+Both the palidrome and anagram solvers are fast. Probably no need for optimisation given no mention of performance in the spec.
+
+palindromeBenchMark = ~0.098;
+anagramBenchMark = ~0.23;
+pangramBenchMark = ~0.58;
+
+
+2. Trying to improve pangram speed
+    a. test 1 - lookup array by key - 0.644220,0.627844,0.644414 - Surpsingly this is actually slower. #25m
+    b. test 2 - trying to use an in memory array instead of range() with letters in order or most commly used
+    Found that it is slightly quicker, but also the order doesn't matter. Ordering by least common first also was quicker
+    indicating the improvement was eliminating range() # 15m
+
+Cutting optimisation phase here, to focus on delivering command line app and good installation documentation.
+
+4. Create command line app to run checkers #1h20m
+
+php bin/console app:string-checker anagram "string one" "string two"
+
+Todo next session
+-----------------
+1. 
+    a. also do dry run of uninstalling project and installing and record every command

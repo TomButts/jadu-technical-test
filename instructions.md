@@ -14,3 +14,5 @@ Basic php tests command
 Export variable and symfony-docker command for setting up xdebug
 
 PHP unit with coverage example
+php bin/phpunit --exclude-group=benchmarks
+php bin/phpunit --exclude-group=benchmarks --coverage-html /app/tests/Reports

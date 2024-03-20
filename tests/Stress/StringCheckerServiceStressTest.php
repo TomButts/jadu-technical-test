@@ -19,15 +19,14 @@ class StringCheckerServiceStressTest extends TestCase
     private string $wordDictionaryPath = '/app/tests/Stress/dictionary/word-dictionary.csv';
     private string $phraseDictionaryPath = '/app/tests/Stress/dictionary/phrase-dictionary.csv';
 
-    private float $palindromeBenchMark = 0.098037 + 0.025;
-    private float $anagramBenchMark = 0.239288 + 0.05;
-    private float $pangramBenchMark = 0.597082 + 0.05;
-
     protected function setUp(): void
     {
         $this->stringChecker = new StringCheckerService();
     }
 
+    /**
+     * @group benchmarks
+     */
     public function testIsPalindromeTimings()
     {
         $words = $this->readDictionaryCsv($this->wordDictionaryPath);
@@ -42,10 +41,11 @@ class StringCheckerServiceStressTest extends TestCase
         $executionTime = $endTime - $startTime;
 
         echo sprintf('Palindrome execution: %.6f %s', $executionTime, PHP_EOL);
-
-        $this->assertLessThanOrEqual($this->palindromeBenchMark, $executionTime);
     }
 
+    /**
+     * @group benchmarks
+     */
     public function testIsAnagramTimings()
     {
         $words = $this->readDictionaryCsv($this->wordDictionaryPath); // Read phrases from the dictionary
@@ -65,10 +65,11 @@ class StringCheckerServiceStressTest extends TestCase
         $executionTime = $endTime - $startTime;
 
         echo sprintf('Anagram execution: %.6f %s', $executionTime, PHP_EOL);
-
-        $this->assertLessThanOrEqual($this->anagramBenchMark, $executionTime);
     }
 
+    /**
+     * @group benchmarks
+     */
     public function testIsPangramTimings()
     {
         $phrases = $this->readDictionaryCsv($this->phraseDictionaryPath);
@@ -83,8 +84,6 @@ class StringCheckerServiceStressTest extends TestCase
         $executionTime = $endTime - $startTime;
 
         echo sprintf('Pangram execution: %.6f %s', $executionTime, PHP_EOL);
-
-        $this->assertLessThanOrEqual($this->pangramBenchMark, $executionTime);
     }
 
     /**

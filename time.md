@@ -63,7 +63,7 @@ Todo next session
 2. Dry run # 35m
     a. Removed project and re-installed to grab all necessary commands
     b. Updated instructions.md and README.md
-
+3. Make github public and set appropriate rules # 20m
 
 Session: 1h 20m
-Total: 3h 30m
+Total: 4h 50m

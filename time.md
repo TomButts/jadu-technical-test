@@ -38,6 +38,9 @@ pangramBenchMark = ~0.58;
     Found that it is slightly quicker, but also the order doesn't matter. Ordering by least common first also was quicker
     indicating the improvement was eliminating range() # 15m
 
+Session: 1h 20m
+Total: 3h 30m
+
 Cutting optimisation phase here, to focus on delivering command line app and good installation documentation.
 
 4. Create command line app to run checkers #1h20m
@@ -57,3 +60,10 @@ Todo next session
 ### 21/03/2024
 
 1. Tidying up command and creating test with full coverage # 25m
+2. Dry run # 35m
+    a. Removed project and re-installed to grab all necessary commands
+    b. Updated instructions.md and README.md
+
+
+Session: 1h 20m
+Total: 3h 30m

@@ -1,51 +1,79 @@
-# Symfony Docker
+# Instructions
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
+I have created a command line app to show the string checking functionality working.
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+The project also includes automated unit, command and benchmarking tests which are worth checking out.
 
-## Getting Started
+The latest test coverage report can be found in `tests/Reports`
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --no-cache` to build fresh images
-3. Run `docker compose up --pull always -d --wait` to start the project
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+## System Requirements
 
-## Features
+* Docker Compose
+* Docker Desktop (recommended)
 
-* Production, development and CI ready
-* Just 1 service by default
-* Blazing-fast performance thanks to [the worker mode of FrankenPHP](https://github.com/dunglas/frankenphp/blob/main/docs/worker.md) (automatically enabled in prod mode)
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and prod)
-* HTTP/3 and [Early Hints](https://symfony.com/blog/new-in-symfony-6-3-early-hints) support
-* Real-time messaging thanks to a built-in [Mercure hub](https://symfony.com/doc/current/mercure.html)
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Super-readable configuration
+This project was built using the symfony-docker, instructions and full details can be found here https://github.com/dunglas/symfony-docker. My instructions will assume you are using docker desktop, but feel free to open the bash in your own terminal if thats your prefered way of accessing containers.
 
-**Enjoy!**
+## Setting up the project
 
-## Docs
+Firstly clone the github repo
+> git clone git@github.com:TomButts/jadu-technical-test.git
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using MySQL instead of PostgreSQL](docs/mysql.md)
-8. [Using Alpine Linux instead of Debian](docs/alpine.md)
-9. [Using a Makefile](docs/makefile.md)
-10. [Updating the template](docs/updating.md)
-11. [Troubleshooting](docs/troubleshooting.md)
 
-## License
+In your terminal change directory so that you are in the jadu-technical-test project. If you ran git clone in the dir your terminal path is at, the command will be:
+> cd jadu-technical-test/
 
-Symfony Docker is available under the MIT License.
+The commands to launch the containers are described in the [symfony-docker](https://github.com/dunglas/symfony-docker) template repository. For more configuration options do visit and examine their `README.md`
 
-## Credits
+> docker compose build --no-cache
+> docker compose up --pull always -d --wait
 
-Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+You should now be able to see containers running in Docker Desktop named jadu-technical-test
+Go to the php-1 container and open the exec tab
+
+Optional: executing the following allows using up arrow to cycle command history
+> /bin/bash
+
+You should be in the `/app` directory at this point and http://localhost should show the fresh symfony install welcome page (after accepting certs are insecure in browser)
+
+## Running the command
+
+The console command name is ‘app:string-checker’
+
+I recommend running the help command first to get information on all the arguments and how to use them
+> php bin/console app:string-checker -h
+
+### Examples
+
+To check a palindrome you could run
+> php bin/console app:string-checker palindrome anna
+
+> php bin/console app:string-checker palindrome "an nan na"
+
+To check an anagram
+> php bin/console app:string-checker anagram "my anagram" "yam nam gar"
+
+Use quotes around phrases you want to use as an argument as mentioned on -h display.
+
+## Running Tests
+
+To run the tests I would expect to go into the production pipelines:
+> php bin/phpunit --exclude-group=benchmarks
+
+I have left my benchmarking tests in for easier examination. I would usually take these out as they are unstable and not suitable for a pipeline, and also slow.
+
+Execute the following to run the benchmark tests
+> php bin/phpunit tests/Stress
+
+The last coverage report does exist in `/app/tests/Reports` directory. You can view the index.html in a browser or html viewer of choice out of the box.
+
+You can also re-run coverage yourself
+
+First turn on xdebug - included out of box in symfony-docker
+> export XDEBUG_MODE=coverage
+
+Then run
+> php bin/phpunit --exclude-group=benchmarks --coverage-html=tests/Reports
+
+## Thought Process
+
+You can see notes on my approach to the problem in the `time.md` file at the root of the project.

@@ -53,3 +53,7 @@ Todo next session
 3. Finish the installation.md - move it into README.md also just so the repo looks good on github
 4. Make sure to apply github admin write only ruleset and then make github public
 5. Send email about finishing project
+
+### 21/03/2024
+
+1. Tidying up command and creating test with full coverage # 25m

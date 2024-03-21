@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Service\StringCheckerService;
-
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -55,12 +54,26 @@ class StringCheckerCommand extends Command
         $checker = $input->getArgument('checker');
 
         if (!in_array($checker, $this->supportedCheckers)) {
-            throw new InvalidArgumentException(
+            $io = new SymfonyStyle($input, $output);
+
+            $io->error(
                 sprintf('Invalid checker "%s". Allowed checkers are: %s', $checker, implode(', ', $this->supportedCheckers))
             );
+
+            return Command::FAILURE;
         }
     }
 
+    /**
+     * Execution for string checker command.
+     *
+     * When adding a new check make sure to add the check name to supported checkers array.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return integer
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -95,6 +108,8 @@ class StringCheckerCommand extends Command
 
         if (null === $stringIsCheckType) {
             $io->note(sprintf('Checker %s has not yet been configured', $checker));
+
+            return Command::FAILURE;
         }
 
         if ($stringIsCheckType) {
